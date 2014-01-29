@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import _thread
+import os
+import sys
+from googlequotemachine import getquote
+from yahooquotemachine import getquote
+from bloombergquotemachine import getquote
+from createtablesgooglefinance import createtable
+from createtablesyahoofinance import createtable
+from createtablesbloomberg import createtable
+
+start1 = []
+
+
+sys.setrecursionlimit(100000)
+
+
+actionlist = ["http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=AAC.AX+AAX.AX+ABC.AX+AGK.AX+AGO.AX+AIO.AX+AIX.AX+AJA.AX+AJL.AX+ALL.AX+ALS.AX+ALZ.AX+AMC.AX+AMP.AX+ANN.AX+ANZ.AX+APA.AX+APN.AX+AQA.AX+AQP.AX+ASX.AX+AWC.AX+AWE.AX+BBG.AX+BEN.AX+BHP.AX+BKN.AX+BLD.AX+BLY.AX+BOQ.AX+BPT.AX+BSL.AX+BWP.AX+BXB.AX+CAB.AX+CBA.AX+CCL.AX+CDU.AX+CGF.AX+CHC.AX+CMJ.AX&ex=.csv",
+"http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=COH.AX+CPA.AX+CPU.AX+CSL.AX+CSR.AX+CTX.AX+CVN.AX+CWN.AX+DJS.AX+DOW.AX+DUE.AX+DXS.AX+EHL.AX+ELD.AX+ENV.AX+EQNMF+ERA.AX+EWC.AX+FKP.AX+FLT.AX+FMG.AX+FWD.AX+FXJ.AX+GBG.AX+GFF.AX+GMG.AX+GNC.AX+GNS.AX+GPT.AX+GUD.AX+HDF.AX+HGG.AX+HIL.AX+HST.AX+HVN.AX+IAG.AX+IFL.AX+IFN.AX+IGO.AX+ILU.AX&ex=.csv",
+"http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=IOF.AX+IPL.AX+IRE.AX+IVC.AX+JBH.AX+JHX.AX+KAR.AX+KCN.AX+LEI.AX+LLC.AX+LNC.AX+LYC.AX+MAH.AX+MBN.AX+MCR.AX+MGR.AX+MGX.AX+MML.AX+MMX.AX+MND.AX+MPO.AX+MQG.AX+MTS.AX+NAB.AX+NCM.AX+NUF.AX+NWS.AX+NXS.AX+OMH.AX+ORG.AX+ORI.AX+OSH.AX+OST.AX+OZL.AX+PAN.AX+PBG.AX+PDN.AX+PLA.AX+PNA.AX+PPT.AX+PPX.AX+PRY.AX+PTM.AX+QAN.AX+QBE.AX&ex=.csv",
+"http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=RHC.AX+RIO.AX+RMD.AX+ROC.AX+SBM.AX+SDL.AX+SEK.AX+SGM.AX+SGP.AX+SGT.AX+SHL.AX+SIP.AX+SKI.AX+SMX.AX+SPN.AX+SPT.AX+STO.AX+SUN.AX+TAH.AX+TCL.AX+TEL.AX+TEN.AX+TLS.AX+TOL.AX+TPI.AX+TSE.AX+TTS.AX+UGL.AX+VTA.AX+WBC.AX+WDC.AX+WES.AX+WOR.AX+WOW.AX+WPL.AX+WSA.AX+WTF.AX&ex=.csv"]
+
+
+
+for listo in actionlist:
+        createtab(listo, "AU.db")
+
+a_lock = _thread.allocate_lock()
+thr = []
+with a_lock:
+        print("locks placed and AUSSI engine is running.....")
+
+        for listo in actionlist:
+                thr.append(_thread.start_new_thread(actionking, (start1,listo, "AU.db",) ))
+
+
+while 1:
+        pass
+for th in thr:
+        th._thread.exit()
+
